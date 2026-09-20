@@ -1,3 +1,8 @@
+/* =========================================================
+   RESEARCH PUBLICATION MANAGEMENT PORTAL
+   Complete App.css
+========================================================= */
+
 * {
   margin: 0;
   padding: 0;
@@ -8,31 +13,77 @@
   --primary: #315bea;
   --primary-dark: #2447c9;
   --text: #172033;
-  --muted: #737b8c;
-  --border: #e5e8ef;
-  --bg: #f6f8fc;
+  --text-light: #5f6878;
+  --muted: #7b8494;
+  --border: #e2e6ee;
+  --background: #f5f7fb;
   --white: #ffffff;
   --green: #15915b;
   --red: #d94b4b;
   --orange: #c98516;
 }
 
-body {
-  font-family: "Segoe UI", Arial, sans-serif;
-  background: var(--bg);
-  color: var(--text);
+/* =========================================================
+   GLOBAL
+========================================================= */
+
+html,
+body,
+#root {
+  min-height: 100%;
+  width: 100%;
 }
 
-/* =====================================================
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: var(--background) !important;
+  color: var(--text) !important;
+}
+
+/* Prevent browser dark-mode interference */
+input,
+select,
+textarea,
+button {
+  color-scheme: light !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+label,
+span,
+td,
+th {
+  color: inherit;
+}
+
+button {
+  font-family: inherit;
+}
+
+input,
+select,
+textarea {
+  font-family: inherit;
+}
+
+/* =========================================================
    LOGIN / REGISTER
-===================================================== */
+========================================================= */
 
 .auth-page {
   min-height: 100vh;
   display: grid;
   grid-template-columns: 55% 45%;
-  background: white;
+  background: #ffffff !important;
 }
+
+/* LEFT SIDE */
 
 .auth-showcase {
   position: relative;
@@ -49,7 +100,7 @@ body {
   border-radius: 50%;
   right: -180px;
   top: -170px;
-  background: rgba(255,255,255,0.07);
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .showcase-content {
@@ -71,47 +122,48 @@ body {
   width: 46px;
   height: 46px;
   border-radius: 12px;
-  background: white;
-  color: var(--primary);
+  background: #ffffff;
+  color: var(--primary) !important;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   font-weight: 800;
 }
 
 .auth-brand h2 {
-  color: white;
-  font-size: 20px;
+  color: #ffffff !important;
+  font-size: 21px;
 }
 
 .auth-brand span {
-  color: rgba(255,255,255,0.65);
+  display: block;
+  color: rgba(255, 255, 255, 0.7) !important;
   font-size: 11px;
+  margin-top: 2px;
 }
 
 .showcase-main {
   margin: auto 0;
-  max-width: 680px;
+  max-width: 650px;
 }
 
 .eyebrow {
-  color: #b9c8ff;
+  color: #b9c8ff !important;
   font-size: 12px;
   font-weight: 800;
-  letter-spacing: 1.8px;
+  letter-spacing: 2px;
   margin-bottom: 18px;
 }
 
 .showcase-main h1 {
-  color: white;
-  font-size: 54px;
+  color: #ffffff !important;
+  font-size: 52px;
   line-height: 1.1;
-  letter-spacing: -1.8px;
   margin-bottom: 22px;
 }
 
 .showcase-description {
-  color: rgba(255,255,255,0.75);
+  color: rgba(255, 255, 255, 0.78) !important;
   font-size: 16px;
   line-height: 1.7;
   max-width: 590px;
@@ -129,46 +181,47 @@ body {
   gap: 12px;
   padding: 15px;
   border-radius: 12px;
-  background: rgba(255,255,255,0.08);
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .feature-icon {
-  min-width: 32px;
-  height: 32px;
+  min-width: 34px;
+  height: 34px;
   border-radius: 8px;
-  background: rgba(255,255,255,0.12);
-  color: white;
+  background: rgba(255, 255, 255, 0.13);
+  color: #ffffff !important;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 11px;
   font-weight: bold;
 }
 
 .showcase-feature h3 {
-  color: white;
-  font-size: 13px;
+  color: #ffffff !important;
+  font-size: 14px;
   margin-bottom: 4px;
 }
 
 .showcase-feature p {
-  color: rgba(255,255,255,0.6);
+  color: rgba(255, 255, 255, 0.65) !important;
   font-size: 11px;
   line-height: 1.5;
 }
 
 .showcase-footer {
-  color: rgba(255,255,255,0.45);
+  color: rgba(255, 255, 255, 0.45) !important;
   font-size: 10px;
 }
 
-/* AUTH FORM */
+/* RIGHT FORM */
 
 .auth-form-section {
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 50px;
+  background: #ffffff !important;
 }
 
 .auth-form-container {
@@ -185,39 +238,44 @@ body {
 }
 
 .form-eyebrow {
-  color: var(--primary);
-  font-size: 10px;
+  color: var(--primary) !important;
+  font-size: 11px;
   font-weight: 800;
   letter-spacing: 1.5px;
   margin-bottom: 8px;
 }
 
 .auth-heading h2 {
+  color: var(--text) !important;
   font-size: 32px;
   margin-bottom: 7px;
 }
 
 .auth-heading p {
-  color: var(--muted);
-  font-size: 13px;
+  color: var(--muted) !important;
+  font-size: 14px;
 }
 
+/* ALERT */
+
 .auth-alert {
-  padding: 11px 13px;
+  padding: 12px 14px;
   border-radius: 8px;
   font-size: 12px;
   margin-bottom: 16px;
 }
 
 .auth-alert.success {
-  background: #eaf8f1;
-  color: var(--green);
+  background: #eaf8f1 !important;
+  color: var(--green) !important;
 }
 
 .auth-alert.error {
-  background: #fff0f0;
-  color: var(--red);
+  background: #fff0f0 !important;
+  color: var(--red) !important;
 }
+
+/* FORM FIELD */
 
 .form-field {
   margin-bottom: 17px;
@@ -225,7 +283,8 @@ body {
 
 .form-field label {
   display: block;
-  font-size: 12px;
+  color: var(--text) !important;
+  font-size: 13px;
   font-weight: 700;
   margin-bottom: 7px;
 }
@@ -236,29 +295,35 @@ body {
   border-radius: 9px;
   display: flex;
   align-items: center;
+  background: #ffffff !important;
 }
 
 .input-wrapper:focus-within {
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(49,91,234,0.08);
+  box-shadow: 0 0 0 3px rgba(49, 91, 234, 0.08);
 }
 
 .input-icon {
   width: 40px;
   text-align: center;
-  color: #9aa1af;
+  color: #8d96a6 !important;
 }
 
 .input-wrapper input,
 .input-wrapper select {
   width: 100%;
   height: 100%;
-  border: none;
+  border: none !important;
   outline: none;
-  background: transparent;
-  font-size: 13px;
-  color: #222;
+  background: transparent !important;
+  color: #172033 !important;
+  font-size: 14px;
   padding-right: 10px;
+}
+
+.input-wrapper input::placeholder {
+  color: #8b93a2 !important;
+  opacity: 1;
 }
 
 .auth-submit {
@@ -267,8 +332,8 @@ body {
   border: none;
   border-radius: 9px;
   background: var(--primary);
-  color: white;
-  font-size: 13px;
+  color: #ffffff !important;
+  font-size: 14px;
   font-weight: 700;
   cursor: pointer;
 }
@@ -297,8 +362,8 @@ body {
 }
 
 .auth-divider span {
-  color: #aaa;
-  font-size: 10px;
+  color: #999fac !important;
+  font-size: 11px;
 }
 
 .auth-switch {
@@ -307,16 +372,16 @@ body {
 
 .auth-switch p {
   display: inline;
-  color: var(--muted);
-  font-size: 12px;
+  color: var(--muted) !important;
+  font-size: 13px;
 }
 
 .auth-switch button {
   border: none;
   background: none;
-  color: var(--primary);
+  color: var(--primary) !important;
   font-weight: 700;
-  font-size: 12px;
+  font-size: 13px;
   cursor: pointer;
 }
 
@@ -330,20 +395,22 @@ body {
 }
 
 .security-note p {
-  color: #999fac;
-  font-size: 10px;
+  color: #929aa9 !important;
+  font-size: 11px;
 }
 
-/* =====================================================
+/* =========================================================
    MAIN APP
-===================================================== */
+========================================================= */
 
 .app-layout {
   min-height: 100vh;
-  background: var(--bg);
+  background: var(--background) !important;
 }
 
-/* SIDEBAR */
+/* =========================================================
+   SIDEBAR
+========================================================= */
 
 .sidebar {
   position: fixed;
@@ -351,7 +418,7 @@ body {
   top: 0;
   bottom: 0;
   width: 245px;
-  background: white;
+  background: #ffffff !important;
   border-right: 1px solid var(--border);
   display: flex;
   flex-direction: column;
@@ -371,26 +438,27 @@ body {
   width: 42px;
   height: 42px;
   background: #edf2ff;
-  color: var(--primary);
+  color: var(--primary) !important;
 }
 
 .sidebar-brand h2 {
-  font-size: 16px;
+  color: var(--text) !important;
+  font-size: 17px;
 }
 
 .sidebar-brand span {
   display: block;
-  color: #999fac;
+  color: #929aaa !important;
   font-size: 10px;
   margin-top: 2px;
 }
 
 .sidebar-section-title {
   padding: 24px 22px 9px;
-  font-size: 9px;
+  font-size: 10px;
   font-weight: 800;
   letter-spacing: 1.3px;
-  color: #a0a6b2;
+  color: #929aaa !important;
 }
 
 .sidebar-nav {
@@ -399,16 +467,16 @@ body {
 
 .nav-item {
   width: 100%;
-  height: 43px;
+  height: 44px;
   border: none;
-  background: transparent;
+  background: transparent !important;
   border-radius: 8px;
   display: flex;
   align-items: center;
   gap: 12px;
   padding: 0 13px;
-  color: #6e7789;
-  font-size: 12px;
+  color: #606a7c !important;
+  font-size: 13px;
   cursor: pointer;
   margin-bottom: 4px;
   text-align: left;
@@ -421,13 +489,13 @@ body {
 }
 
 .nav-item:hover {
-  background: #f5f7fb;
-  color: var(--primary);
+  background: #f3f6fc !important;
+  color: var(--primary) !important;
 }
 
 .nav-item.active {
-  background: #edf2ff;
-  color: var(--primary);
+  background: #edf2ff !important;
+  color: var(--primary) !important;
   font-weight: 700;
 }
 
@@ -446,42 +514,49 @@ body {
 }
 
 .avatar {
-  width: 34px;
-  height: 34px;
+  width: 36px;
+  height: 36px;
   border-radius: 9px;
   background: #edf2ff;
-  color: var(--primary);
+  color: var(--primary) !important;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 700;
 }
 
 .user-mini strong {
   display: block;
-  font-size: 11px;
+  color: var(--text) !important;
+  font-size: 12px;
 }
 
 .user-mini span {
   display: block;
-  color: #999fac;
-  font-size: 9px;
+  color: #929aaa !important;
+  font-size: 10px;
   margin-top: 2px;
 }
 
 .logout-btn {
   width: 100%;
-  height: 37px;
+  height: 38px;
   border: none;
   border-radius: 7px;
-  background: #f6f7f9;
-  color: #687182;
+  background: #f2f4f7 !important;
+  color: #5f6878 !important;
   cursor: pointer;
-  font-size: 11px;
+  font-size: 12px;
 }
 
-/* MAIN CONTENT */
+.logout-btn:hover {
+  background: #e9ecf1 !important;
+}
+
+/* =========================================================
+   MAIN CONTENT
+========================================================= */
 
 .main-content {
   margin-left: 245px;
@@ -490,7 +565,7 @@ body {
 
 .topbar {
   height: 82px;
-  background: white;
+  background: #ffffff !important;
   border-bottom: 1px solid var(--border);
   padding: 0 30px;
   display: flex;
@@ -499,13 +574,14 @@ body {
 }
 
 .topbar h1 {
-  font-size: 21px;
+  color: var(--text) !important;
+  font-size: 22px;
   margin-bottom: 3px;
 }
 
 .topbar p {
-  color: var(--muted);
-  font-size: 11px;
+  color: var(--muted) !important;
+  font-size: 12px;
 }
 
 .topbar-user {
@@ -515,54 +591,55 @@ body {
 }
 
 .topbar-avatar {
-  width: 35px;
-  height: 35px;
+  width: 36px;
+  height: 36px;
   border-radius: 9px;
   background: #edf2ff;
-  color: var(--primary);
+  color: var(--primary) !important;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 700;
 }
 
 .topbar-user strong {
   display: block;
-  font-size: 11px;
+  color: var(--text) !important;
+  font-size: 12px;
 }
 
 .topbar-user span {
   display: block;
-  color: #999fac;
-  font-size: 9px;
+  color: #929aaa !important;
+  font-size: 10px;
   margin-top: 2px;
 }
 
 .page-message {
   margin: 16px 30px 0;
-  padding: 10px 13px;
+  padding: 11px 14px;
   border-radius: 8px;
-  font-size: 11px;
+  font-size: 12px;
 }
 
 .page-message.success {
-  background: #eaf8f1;
-  color: var(--green);
+  background: #eaf8f1 !important;
+  color: var(--green) !important;
 }
 
 .page-message.error {
-  background: #fff0f0;
-  color: var(--red);
+  background: #fff0f0 !important;
+  color: var(--red) !important;
 }
 
 .page-container {
   padding: 25px 30px 40px;
 }
 
-/* =====================================================
-   WELCOME
-===================================================== */
+/* =========================================================
+   WELCOME BANNER
+========================================================= */
 
 .welcome-banner {
   position: relative;
@@ -571,7 +648,6 @@ body {
   padding: 27px 30px;
   border-radius: 14px;
   background: linear-gradient(135deg, #315bea, #5578ed);
-  color: white;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -586,48 +662,49 @@ body {
   border-radius: 50%;
   right: -90px;
   top: -100px;
-  background: rgba(255,255,255,0.08);
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .banner-label {
   position: relative;
   z-index: 2;
-  font-size: 9px;
+  color: rgba(255, 255, 255, 0.75) !important;
+  font-size: 10px;
   font-weight: 800;
   letter-spacing: 1.4px;
-  color: rgba(255,255,255,0.72);
 }
 
 .welcome-banner h2 {
   position: relative;
   z-index: 2;
-  font-size: 24px;
+  color: #ffffff !important;
+  font-size: 25px;
   margin: 8px 0;
 }
 
 .welcome-banner p {
   position: relative;
   z-index: 2;
-  color: rgba(255,255,255,0.78);
-  font-size: 12px;
+  color: rgba(255, 255, 255, 0.8) !important;
+  font-size: 13px;
 }
 
 .welcome-banner button {
   position: relative;
   z-index: 3;
   border: none;
-  background: white;
-  color: var(--primary);
-  padding: 11px 15px;
+  background: #ffffff !important;
+  color: var(--primary) !important;
+  padding: 11px 16px;
   border-radius: 8px;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   cursor: pointer;
 }
 
-/* =====================================================
+/* =========================================================
    STATS
-===================================================== */
+========================================================= */
 
 .stats-grid {
   display: grid;
@@ -637,7 +714,7 @@ body {
 }
 
 .stat-card {
-  background: white;
+  background: #ffffff !important;
   border: 1px solid var(--border);
   border-radius: 12px;
   padding: 18px;
@@ -647,31 +724,32 @@ body {
 }
 
 .stat-icon {
-  width: 40px;
-  height: 40px;
+  width: 42px;
+  height: 42px;
   flex-shrink: 0;
   border-radius: 10px;
   background: #edf2ff;
-  color: var(--primary);
+  color: var(--primary) !important;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 16px;
+  font-size: 17px;
 }
 
 .stat-card p {
-  color: #808898;
-  font-size: 10px;
+  color: #727b8c !important;
+  font-size: 11px;
   margin-bottom: 4px;
 }
 
 .stat-card h3 {
-  font-size: 23px;
+  color: var(--text) !important;
+  font-size: 24px;
 }
 
-/* =====================================================
+/* =========================================================
    SECTION
-===================================================== */
+========================================================= */
 
 .section-header {
   display: flex;
@@ -681,30 +759,31 @@ body {
 }
 
 .section-header h2 {
-  font-size: 17px;
+  color: var(--text) !important;
+  font-size: 18px;
   margin-bottom: 4px;
 }
 
 .section-header p {
-  color: var(--muted);
-  font-size: 11px;
+  color: var(--muted) !important;
+  font-size: 12px;
 }
 
 .text-button {
   border: none;
-  background: none;
-  color: var(--primary);
-  font-size: 11px;
+  background: none !important;
+  color: var(--primary) !important;
+  font-size: 12px;
   font-weight: 700;
   cursor: pointer;
 }
 
-/* =====================================================
+/* =========================================================
    TABLE
-===================================================== */
+========================================================= */
 
 .table-card {
-  background: white;
+  background: #ffffff !important;
   border: 1px solid var(--border);
   border-radius: 12px;
   overflow: hidden;
@@ -720,24 +799,25 @@ table {
 }
 
 thead {
-  background: #fafbfc;
+  background: #fafbfc !important;
 }
 
 th {
   text-align: left;
-  padding: 13px 16px;
-  color: #858d9c;
-  font-size: 9px;
+  padding: 14px 16px;
+  color: #687284 !important;
+  font-size: 10px;
+  font-weight: 700;
   letter-spacing: 0.5px;
   text-transform: uppercase;
   border-bottom: 1px solid var(--border);
 }
 
 td {
-  padding: 14px 16px;
+  padding: 15px 16px;
   border-bottom: 1px solid #f0f1f4;
-  color: #626b7b;
-  font-size: 11px;
+  color: #596476 !important;
+  font-size: 12px;
 }
 
 tbody tr:last-child td {
@@ -745,19 +825,19 @@ tbody tr:last-child td {
 }
 
 tbody tr:hover {
-  background: #fcfdff;
+  background: #fafcff !important;
 }
 
 .paper-title {
   max-width: 300px;
-  color: #202838;
+  color: #202838 !important;
   font-weight: 700;
-  font-size: 12px;
+  font-size: 13px;
 }
 
 .paper-doi {
-  color: #9ba1ad;
-  font-size: 9px;
+  color: #8992a1 !important;
+  font-size: 10px;
   margin-top: 3px;
 }
 
@@ -765,58 +845,59 @@ tbody tr:hover {
   display: inline-block;
   padding: 5px 9px;
   border-radius: 20px;
-  font-size: 9px;
+  font-size: 10px;
   font-weight: 700;
 }
 
 .status-badge.verified {
-  background: #eaf8f1;
-  color: var(--green);
+  background: #eaf8f1 !important;
+  color: var(--green) !important;
 }
 
 .status-badge.pending {
-  background: #fff6df;
-  color: var(--orange);
+  background: #fff6df !important;
+  color: var(--orange) !important;
 }
 
 .status-badge.rejected {
-  background: #fff0f0;
-  color: var(--red);
+  background: #fff0f0 !important;
+  color: var(--red) !important;
 }
 
 .action-buttons {
   display: flex;
-  gap: 5px;
+  gap: 6px;
+  flex-wrap: wrap;
 }
 
 .action-buttons button {
   border: none;
   border-radius: 5px;
-  padding: 6px 8px;
-  font-size: 9px;
+  padding: 7px 9px;
+  font-size: 10px;
   font-weight: 700;
   cursor: pointer;
 }
 
 .verify-btn {
-  background: #eaf8f1;
-  color: var(--green);
+  background: #eaf8f1 !important;
+  color: var(--green) !important;
 }
 
 .reject-btn,
 .delete-btn {
-  background: #fff0f0;
-  color: var(--red);
+  background: #fff0f0 !important;
+  color: var(--red) !important;
 }
 
 .edit-btn {
-  background: #edf2ff;
-  color: var(--primary);
+  background: #edf2ff !important;
+  color: var(--primary) !important;
 }
 
-/* =====================================================
-   FORM
-===================================================== */
+/* =========================================================
+   PUBLICATION FORM
+========================================================= */
 
 .form-page {
   max-width: 850px;
@@ -824,16 +905,16 @@ tbody tr:hover {
 }
 
 .publication-form {
-  background: white;
+  background: #ffffff !important;
   border: 1px solid var(--border);
   border-radius: 13px;
-  padding: 25px;
+  padding: 28px;
 }
 
 .form-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 18px;
+  gap: 20px;
 }
 
 .form-grid .full-width {
@@ -846,26 +927,42 @@ tbody tr:hover {
 
 .publication-form label {
   display: block;
-  font-size: 11px;
+  color: var(--text) !important;
+  font-size: 13px;
   font-weight: 700;
   margin-bottom: 7px;
 }
 
 .publication-form input,
-.publication-form select {
+.publication-form select,
+.publication-form textarea {
   width: 100%;
-  height: 45px;
-  border: 1px solid #dfe3ea;
+  min-height: 46px;
+  border: 1px solid #dfe3ea !important;
   border-radius: 8px;
   outline: none;
-  padding: 0 11px;
-  font-size: 12px;
-  background: white;
+  padding: 0 12px;
+  font-size: 13px;
+  color: #172033 !important;
+  background: #ffffff !important;
+}
+
+.publication-form textarea {
+  padding-top: 12px;
+  resize: vertical;
+}
+
+.publication-form input::placeholder,
+.publication-form textarea::placeholder {
+  color: #8b93a2 !important;
+  opacity: 1;
 }
 
 .publication-form input:focus,
-.publication-form select:focus {
-  border-color: var(--primary);
+.publication-form select:focus,
+.publication-form textarea:focus {
+  border-color: var(--primary) !important;
+  box-shadow: 0 0 0 3px rgba(49, 91, 234, 0.08);
 }
 
 .form-actions {
@@ -880,29 +977,33 @@ tbody tr:hover {
 .primary-btn,
 .secondary-btn {
   border: none;
-  padding: 10px 16px;
+  padding: 11px 17px;
   border-radius: 7px;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   cursor: pointer;
 }
 
 .primary-btn {
-  background: var(--primary);
-  color: white;
+  background: var(--primary) !important;
+  color: #ffffff !important;
+}
+
+.primary-btn:hover {
+  background: var(--primary-dark) !important;
 }
 
 .secondary-btn {
-  background: #f1f3f6;
-  color: #697282;
+  background: #eef1f5 !important;
+  color: #5f6878 !important;
 }
 
-/* =====================================================
+/* =========================================================
    REPORTS
-===================================================== */
+========================================================= */
 
 .report-card {
-  background: white;
+  background: #ffffff !important;
   border: 1px solid var(--border);
   border-radius: 12px;
   overflow: hidden;
@@ -920,24 +1021,25 @@ tbody tr:hover {
 }
 
 .report-icon {
-  width: 38px;
-  height: 38px;
+  width: 40px;
+  height: 40px;
   border-radius: 9px;
   background: #edf2ff;
-  color: var(--primary);
+  color: var(--primary) !important;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .report-card h3 {
-  font-size: 13px;
+  color: var(--text) !important;
+  font-size: 14px;
   margin-bottom: 3px;
 }
 
 .report-card p {
-  color: var(--muted);
-  font-size: 10px;
+  color: var(--muted) !important;
+  font-size: 11px;
 }
 
 .report-list {
@@ -956,15 +1058,18 @@ tbody tr:hover {
 }
 
 .report-row span {
-  color: #707889;
-  font-size: 11px;
+  color: #687284 !important;
+  font-size: 12px;
 }
 
 .report-row strong {
-  font-size: 13px;
+  color: var(--text) !important;
+  font-size: 14px;
 }
 
-/* EMPTY */
+/* =========================================================
+   EMPTY STATE
+========================================================= */
 
 .empty-cell {
   padding: 0 !important;
@@ -976,33 +1081,60 @@ tbody tr:hover {
 }
 
 .empty-icon {
-  width: 45px;
-  height: 45px;
+  width: 46px;
+  height: 46px;
   margin: auto auto 10px;
   border-radius: 10px;
-  background: #f0f3f8;
+  background: #f0f3f8 !important;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #9299a7;
+  color: #858e9e !important;
 }
 
 .empty-state h3 {
-  font-size: 13px;
+  color: var(--text) !important;
+  font-size: 14px;
   margin-bottom: 4px;
 }
 
 .empty-state p {
-  color: #969daa;
-  font-size: 10px;
+  color: #8992a1 !important;
+  font-size: 11px;
 }
 
-/* =====================================================
+/* =========================================================
+   UNIVERSAL TEXT / INPUT FIX
+========================================================= */
+
+.app-layout input,
+.app-layout select,
+.app-layout textarea {
+  color: #172033 !important;
+  background: #ffffff !important;
+}
+
+.app-layout input::placeholder,
+.app-layout textarea::placeholder {
+  color: #8b93a2 !important;
+}
+
+.app-layout h1,
+.app-layout h2,
+.app-layout h3,
+.app-layout h4,
+.app-layout p,
+.app-layout label,
+.app-layout td,
+.app-layout th {
+  color: inherit;
+}
+
+/* =========================================================
    RESPONSIVE
-===================================================== */
+========================================================= */
 
 @media (max-width: 1000px) {
-
   .auth-page {
     grid-template-columns: 1fr;
   }
@@ -1018,7 +1150,7 @@ tbody tr:hover {
 
   .mobile-brand .brand-logo {
     background: #edf2ff;
-    color: var(--primary);
+    color: var(--primary) !important;
   }
 
   .sidebar {
@@ -1035,11 +1167,6 @@ tbody tr:hover {
 }
 
 @media (max-width: 700px) {
-
-  .app-layout {
-    display: block;
-  }
-
   .sidebar {
     position: relative;
     width: 100%;
@@ -1080,10 +1207,13 @@ tbody tr:hover {
     align-items: flex-start;
     gap: 18px;
   }
+
+  .page-container {
+    padding: 20px;
+  }
 }
 
 @media (max-width: 500px) {
-
   .auth-form-section {
     padding: 25px 18px;
   }
@@ -1097,7 +1227,7 @@ tbody tr:hover {
   }
 
   .page-container {
-    padding: 20px 15px;
+    padding: 18px 15px;
   }
 
   .page-message {
@@ -1110,6 +1240,10 @@ tbody tr:hover {
   }
 
   .welcome-banner h2 {
-    font-size: 20px;
+    font-size: 21px;
+  }
+
+  .publication-form {
+    padding: 20px;
   }
 }
