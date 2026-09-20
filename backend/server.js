@@ -3,16 +3,12 @@ const dns = require("dns");
 dns.setServers(["8.8.8.8"]);
 
 const express = require("express");
+const cors = require("cors");
 require("dotenv").config();
 
 const { MongoClient, ObjectId } = require("mongodb");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-
-
-// ===============================
-// MONGODB CONNECTION
-// ===============================
 
 const client = new MongoClient(process.env.MONGO_URI);
 
@@ -24,11 +20,6 @@ const departmentsCollection = db.collection("departments");
 
 const app = express();
 
-
-// ===============================
-// MONGODB CONNECT
-// ===============================
-
 client.connect()
     .then(() => {
         console.log("MongoDB connected successfully");
@@ -37,286 +28,158 @@ client.connect()
         console.log("MongoDB connection failed:", error);
     });
 
-
-// ===============================
-// MIDDLEWARE
-// ===============================
-
+app.use(cors());
 app.use(express.json());
 
 
-// ===============================
-// HOME ROUTE
-// ===============================
+// ==================== HOME ====================
 
 app.get("/", (req, res) => {
-
     res.send("Research Publication Management Portal Backend");
-
 });
 
 
-// =====================================================
-// REGISTER API
-// POST /register
-// =====================================================
+// ==================== REGISTER ====================
 
 app.post("/register", async (req, res) => {
-
     try {
+        const { name, email, password, role } = req.body;
 
-        const {
-            name,
-            email,
-            password,
-            role
-        } = req.body;
-
-
-        // Check existing email
-
-        const existingUser =
-            await usersCollection.findOne({ email });
+        const existingUser = await usersCollection.findOne({ email });
 
         if (existingUser) {
-
             return res.status(400).json({
                 message: "Email already registered"
             });
-
         }
 
-
-        // Hash password
-
-        const hashedPassword =
-            await bcrypt.hash(password, 10);
-
-
-        // Create user
+        const hashedPassword = await bcrypt.hash(password, 10);
 
         const user = {
-
             name: name,
-
             email: email,
-
             password: hashedPassword,
-
             role: role || "faculty"
-
         };
 
-
-        // Insert user
-
-        const result =
-            await usersCollection.insertOne(user);
-
+        const result = await usersCollection.insertOne(user);
 
         res.status(201).json({
-
             message: "User registered successfully",
-
             userId: result.insertedId
-
         });
 
-
     } catch (error) {
-
         console.log(error);
 
         res.status(500).json({
-
             message: "Registration failed"
-
         });
-
     }
-
 });
 
 
-// =====================================================
-// LOGIN API
-// POST /login
-// =====================================================
+// ==================== LOGIN ====================
 
 app.post("/login", async (req, res) => {
-
     try {
+        const { email, password } = req.body;
 
-        const {
-            email,
-            password
-        } = req.body;
-
-
-        // Find user
-
-        const user =
-            await usersCollection.findOne({ email });
-
+        const user = await usersCollection.findOne({ email });
 
         if (!user) {
-
             return res.status(400).json({
-
                 message: "Invalid email or password"
-
             });
-
         }
 
-
-        // Compare password
-
-        const isPasswordCorrect =
-            await bcrypt.compare(
-                password,
-                user.password
-            );
-
+        const isPasswordCorrect = await bcrypt.compare(
+            password,
+            user.password
+        );
 
         if (!isPasswordCorrect) {
-
             return res.status(400).json({
-
                 message: "Invalid email or password"
-
             });
-
         }
 
-
-        // Create JWT token
-
         const token = jwt.sign(
-
             {
                 userId: user._id.toString(),
-
                 role: user.role
-
             },
-
             process.env.JWT_SECRET,
-
             {
                 expiresIn: "1d"
             }
-
         );
 
-
         res.json({
-
             message: "Login successful",
-
             token: token,
-
             role: user.role
-
         });
 
-
     } catch (error) {
-
         console.log(error);
 
         res.status(500).json({
-
             message: "Login failed"
-
         });
-
     }
-
 });
 
 
-// =====================================================
-// AUTHENTICATION MIDDLEWARE
-// =====================================================
+// ==================== AUTHENTICATION ====================
 
 function authenticateToken(req, res, next) {
 
-    const authHeader =
-        req.headers["authorization"];
-
+    const authHeader = req.headers["authorization"];
 
     const token =
-        authHeader &&
-        authHeader.split(" ")[1];
-
+        authHeader && authHeader.split(" ")[1];
 
     if (!token) {
-
         return res.status(401).json({
-
             message: "Access token required"
-
         });
-
     }
 
-
     jwt.verify(
-
         token,
-
         process.env.JWT_SECRET,
-
         (error, user) => {
 
             if (error) {
-
                 return res.status(403).json({
-
                     message: "Invalid or expired token"
-
                 });
-
             }
-
 
             req.user = user;
 
             next();
-
         }
-
     );
-
 }
 
 
-// =====================================================
-// ADMIN MIDDLEWARE
-// =====================================================
+// ==================== ADMIN AUTHENTICATION ====================
 
 function adminOnly(req, res, next) {
 
     if (req.user.role !== "admin") {
-
         return res.status(403).json({
-
             message: "Admin access required"
-
         });
-
     }
 
     next();
-
 }
 
 
-// =====================================================
-// ADD PUBLICATION
-// POST /publications
-// =====================================================
+// ==================== ADD PUBLICATION ====================
 
 app.post(
     "/publications",
@@ -326,19 +189,12 @@ app.post(
         try {
 
             const {
-
                 paperTitle,
-
                 publicationType,
-
                 journalConference,
-
                 publicationYear,
-
                 DOI
-
             } = req.body;
-
 
             const publication = {
 
@@ -357,14 +213,12 @@ app.post(
                 verificationStatus: "Pending",
 
                 createdAt: new Date()
-
             };
 
-
             const result =
-                await publicationsCollection
-                    .insertOne(publication);
-
+                await publicationsCollection.insertOne(
+                    publication
+                );
 
             res.status(201).json({
 
@@ -373,7 +227,6 @@ app.post(
                 publicationId: result.insertedId
 
             });
-
 
         } catch (error) {
 
@@ -384,17 +237,12 @@ app.post(
                 message: "Failed to add publication"
 
             });
-
         }
-
     }
 );
 
 
-// =====================================================
-// GET PUBLICATIONS
-// GET /publications
-// =====================================================
+// ==================== GET PUBLICATIONS ====================
 
 app.get(
     "/publications",
@@ -405,9 +253,6 @@ app.get(
 
             let publications;
 
-
-            // Admin can see all publications
-
             if (req.user.role === "admin") {
 
                 publications =
@@ -415,11 +260,7 @@ app.get(
                         .find({})
                         .toArray();
 
-            }
-
-            // Faculty can see only their publications
-
-            else {
+            } else {
 
                 publications =
                     await publicationsCollection
@@ -427,12 +268,9 @@ app.get(
                             facultyId: req.user.userId
                         })
                         .toArray();
-
             }
 
-
             res.json(publications);
-
 
         } catch (error) {
 
@@ -443,17 +281,12 @@ app.get(
                 message: "Failed to fetch publications"
 
             });
-
         }
-
     }
 );
 
 
-// =====================================================
-// SEARCH PUBLICATIONS
-// GET /publications/search?title=AI
-// =====================================================
+// ==================== SEARCH PUBLICATIONS ====================
 
 app.get(
     "/publications/search",
@@ -465,22 +298,17 @@ app.get(
             const title =
                 req.query.title || "";
 
-
             const publications =
                 await publicationsCollection
                     .find({
-
                         paperTitle: {
                             $regex: title,
                             $options: "i"
                         }
-
                     })
                     .toArray();
 
-
             res.json(publications);
-
 
         } catch (error) {
 
@@ -491,17 +319,12 @@ app.get(
                 message: "Search failed"
 
             });
-
         }
-
     }
 );
 
 
-// =====================================================
-// UPDATE PUBLICATION
-// PUT /publications/:id
-// =====================================================
+// ==================== UPDATE PUBLICATION ====================
 
 app.put(
     "/publications/:id",
@@ -513,14 +336,10 @@ app.put(
             const publicationId =
                 req.params.id;
 
-
             const publication =
                 await publicationsCollection.findOne({
-
                     _id: new ObjectId(publicationId)
-
                 });
-
 
             if (!publication) {
 
@@ -529,28 +348,20 @@ app.put(
                     message: "Publication not found"
 
                 });
-
             }
 
-
-            // Faculty can update only their publication
-
             if (
-
                 req.user.role !== "admin" &&
-
                 publication.facultyId !== req.user.userId
-
             ) {
 
                 return res.status(403).json({
 
-                    message: "You can update only your publications"
+                    message:
+                        "You can update only your publications"
 
                 });
-
             }
-
 
             const updateData = {
 
@@ -568,20 +379,14 @@ app.put(
 
                 DOI:
                     req.body.DOI
-
             };
-
-
-            // Admin can update verification status
 
             if (req.user.role === "admin") {
 
                 updateData.verificationStatus =
                     req.body.verificationStatus ||
                     publication.verificationStatus;
-
             }
-
 
             await publicationsCollection.updateOne(
 
@@ -592,16 +397,14 @@ app.put(
                 {
                     $set: updateData
                 }
-
             );
-
 
             res.json({
 
-                message: "Publication updated successfully"
+                message:
+                    "Publication updated successfully"
 
             });
-
 
         } catch (error) {
 
@@ -609,20 +412,16 @@ app.put(
 
             res.status(500).json({
 
-                message: "Failed to update publication"
+                message:
+                    "Failed to update publication"
 
             });
-
         }
-
     }
 );
 
 
-// =====================================================
-// DELETE PUBLICATION
-// DELETE /publications/:id
-// =====================================================
+// ==================== DELETE PUBLICATION ====================
 
 app.delete(
     "/publications/:id",
@@ -634,58 +433,50 @@ app.delete(
             const publicationId =
                 req.params.id;
 
-
             const publication =
                 await publicationsCollection.findOne({
 
-                    _id: new ObjectId(publicationId)
+                    _id:
+                        new ObjectId(publicationId)
 
                 });
-
 
             if (!publication) {
 
                 return res.status(404).json({
 
-                    message: "Publication not found"
+                    message:
+                        "Publication not found"
 
                 });
-
             }
 
-
-            // Faculty can delete only their publication
-
             if (
-
                 req.user.role !== "admin" &&
-
                 publication.facultyId !== req.user.userId
-
             ) {
 
                 return res.status(403).json({
 
-                    message: "You can delete only your publications"
+                    message:
+                        "You can delete only your publications"
 
                 });
-
             }
-
 
             await publicationsCollection.deleteOne({
 
-                _id: new ObjectId(publicationId)
+                _id:
+                    new ObjectId(publicationId)
 
             });
-
 
             res.json({
 
-                message: "Publication deleted successfully"
+                message:
+                    "Publication deleted successfully"
 
             });
-
 
         } catch (error) {
 
@@ -693,20 +484,16 @@ app.delete(
 
             res.status(500).json({
 
-                message: "Failed to delete publication"
+                message:
+                    "Failed to delete publication"
 
             });
-
         }
-
     }
 );
 
 
-// =====================================================
-// ADMIN VERIFY PUBLICATION
-// PUT /publications/:id/verify
-// =====================================================
+// ==================== VERIFY PUBLICATION ====================
 
 app.put(
     "/publications/:id/verify",
@@ -719,35 +506,34 @@ app.put(
             const publicationId =
                 req.params.id;
 
-
             const status =
                 req.body.verificationStatus ||
                 "Verified";
 
-
             await publicationsCollection.updateOne(
 
                 {
-                    _id: new ObjectId(publicationId)
+                    _id:
+                        new ObjectId(publicationId)
                 },
 
                 {
                     $set: {
-                        verificationStatus: status
+                        verificationStatus:
+                            status
                     }
                 }
-
             );
-
 
             res.json({
 
-                message: "Publication verification status updated",
+                message:
+                    "Publication verification status updated",
 
-                verificationStatus: status
+                verificationStatus:
+                    status
 
             });
-
 
         } catch (error) {
 
@@ -755,20 +541,16 @@ app.put(
 
             res.status(500).json({
 
-                message: "Verification failed"
+                message:
+                    "Verification failed"
 
             });
-
         }
-
     }
 );
 
 
-// =====================================================
-// GET DEPARTMENTS
-// GET /departments
-// =====================================================
+// ==================== GET DEPARTMENTS ====================
 
 app.get(
     "/departments",
@@ -782,9 +564,7 @@ app.get(
                     .find({})
                     .toArray();
 
-
             res.json(departments);
-
 
         } catch (error) {
 
@@ -792,20 +572,16 @@ app.get(
 
             res.status(500).json({
 
-                message: "Failed to fetch departments"
+                message:
+                    "Failed to fetch departments"
 
             });
-
         }
-
     }
 );
 
 
-// =====================================================
-// ADD DEPARTMENT
-// POST /departments
-// =====================================================
+// ==================== ADD DEPARTMENT ====================
 
 app.post(
     "/departments",
@@ -816,15 +592,10 @@ app.post(
         try {
 
             const {
-
                 departmentName,
-
                 HODName,
-
                 totalFaculty
-
             } = req.body;
-
 
             const department = {
 
@@ -836,24 +607,21 @@ app.post(
 
                 totalFaculty:
                     totalFaculty
-
             };
-
 
             const result =
                 await departmentsCollection
                     .insertOne(department);
 
-
             res.status(201).json({
 
-                message: "Department added successfully",
+                message:
+                    "Department added successfully",
 
                 departmentId:
                     result.insertedId
 
             });
-
 
         } catch (error) {
 
@@ -861,20 +629,16 @@ app.post(
 
             res.status(500).json({
 
-                message: "Failed to add department"
+                message:
+                    "Failed to add department"
 
             });
-
         }
-
     }
 );
 
 
-// =====================================================
-// UPDATE DEPARTMENT
-// PUT /departments/:id
-// =====================================================
+// ==================== UPDATE DEPARTMENT ====================
 
 app.put(
     "/departments/:id",
@@ -887,11 +651,11 @@ app.put(
             const departmentId =
                 req.params.id;
 
-
             await departmentsCollection.updateOne(
 
                 {
-                    _id: new ObjectId(departmentId)
+                    _id:
+                        new ObjectId(departmentId)
                 },
 
                 {
@@ -905,19 +669,16 @@ app.put(
 
                         totalFaculty:
                             req.body.totalFaculty
-
                     }
                 }
-
             );
-
 
             res.json({
 
-                message: "Department updated successfully"
+                message:
+                    "Department updated successfully"
 
             });
-
 
         } catch (error) {
 
@@ -925,20 +686,16 @@ app.put(
 
             res.status(500).json({
 
-                message: "Failed to update department"
+                message:
+                    "Failed to update department"
 
             });
-
         }
-
     }
 );
 
 
-// =====================================================
-// DELETE DEPARTMENT
-// DELETE /departments/:id
-// =====================================================
+// ==================== DELETE DEPARTMENT ====================
 
 app.delete(
     "/departments/:id",
@@ -951,20 +708,19 @@ app.delete(
             const departmentId =
                 req.params.id;
 
-
             await departmentsCollection.deleteOne({
 
-                _id: new ObjectId(departmentId)
+                _id:
+                    new ObjectId(departmentId)
 
             });
-
 
             res.json({
 
-                message: "Department deleted successfully"
+                message:
+                    "Department deleted successfully"
 
             });
-
 
         } catch (error) {
 
@@ -972,20 +728,16 @@ app.delete(
 
             res.status(500).json({
 
-                message: "Failed to delete department"
+                message:
+                    "Failed to delete department"
 
             });
-
         }
-
     }
 );
 
 
-// =====================================================
-// ADMIN REPORT
-// GET /admin/report
-// =====================================================
+// ==================== ADMIN REPORT ====================
 
 app.get(
     "/admin/report",
@@ -996,40 +748,35 @@ app.get(
         try {
 
             const totalPublications =
-                await publicationsCollection.countDocuments();
-
+                await publicationsCollection
+                    .countDocuments();
 
             const verifiedPublications =
-                await publicationsCollection.countDocuments({
-
-                    verificationStatus: "Verified"
-
-                });
-
+                await publicationsCollection
+                    .countDocuments({
+                        verificationStatus:
+                            "Verified"
+                    });
 
             const pendingPublications =
-                await publicationsCollection.countDocuments({
-
-                    verificationStatus: "Pending"
-
-                });
-
+                await publicationsCollection
+                    .countDocuments({
+                        verificationStatus:
+                            "Pending"
+                    });
 
             const rejectedPublications =
-                await publicationsCollection.countDocuments({
-
-                    verificationStatus: "Rejected"
-
-                });
-
+                await publicationsCollection
+                    .countDocuments({
+                        verificationStatus:
+                            "Rejected"
+                    });
 
             const totalFaculty =
-                await usersCollection.countDocuments({
-
-                    role: "faculty"
-
-                });
-
+                await usersCollection
+                    .countDocuments({
+                        role: "faculty"
+                    });
 
             res.json({
 
@@ -1050,26 +797,22 @@ app.get(
 
             });
 
-
         } catch (error) {
 
             console.log(error);
 
             res.status(500).json({
 
-                message: "Failed to generate report"
+                message:
+                    "Failed to generate report"
 
             });
-
         }
-
     }
 );
 
 
-// =====================================================
-// START SERVER
-// =====================================================
+// ==================== START SERVER ====================
 
 app.listen(5000, () => {
 
